@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦞 Lobster Orchestrator - 不死龙虾编排器</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1a1a2e; color: #eee; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; text-align: center; }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { opacity: 0.8; font-size: 14px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: #16213e; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-value { font-size: 32px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 12px; opacity: 0.7; margin-top: 5px; }
+        .instances { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .instance-card { background: #16213e; border-radius: 10px; padding: 15px; border-left: 4px solid #667eea; }
+        .instance-card.running { border-left-color: #00c853; }
+        .instance-card.stopped { border-left-color: #ff5252; }
+        .instance-card.crashed { border-left-color: #ff9800; }
+        .instance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .instance-name { font-weight: bold; font-size: 16px; }
+        .instance-status { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .status-running { background: #00c853; color: white; }
+        .status-stopped { background: #ff5252; color: white; }
+        .status-crashed { background: #ff9800; color: white; }
+        .instance-info { font-size: 12px; opacity: 0.7; margin-bottom: 10px; }
+        .instance-info div { margin: 3px 0; }
+        .instance-actions { display: flex; gap: 8px; }
+        .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+        .btn-start { background: #00c853; color: white; }
+        .btn-stop { background: #ff5252; color: white; }
+        .btn-restart { background: #667eea; color: white; }
+        .btn:hover { opacity: 0.8; transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .loading { text-align: center; padding: 40px; opacity: 0.7; }
+        .refresh-btn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: #667eea; color: white; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
+        .refresh-btn:hover { transform: rotate(90deg); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦞 Lobster Orchestrator</h1>
+        <p>不死龙虾编排器 - 手机运行 50 个 PicoClaw 实例</p>
+    </div>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-instances">-</div>
+                <div class="stat-label">总实例数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="running-count">-</div>
+                <div class="stat-label">运行中</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stopped-count">-</div>
+                <div class="stat-label">已停止</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="crashed-count">-</div>
+                <div class="stat-label">已崩溃</div>
+            </div>
+        </div>
+
+        <div class="instances" id="instances-grid">
+            <div class="loading">🔄 加载中...</div>
+        </div>
+    </div>
+
+    <button class="refresh-btn" onclick="loadInstances()" title="刷新">🔄</button>
+
+    <script>
+        const API_BASE = '/api/v1';
+
+        async function loadInstances() {
+            try {
+                const response = await fetch(`${API_BASE}/instances`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderInstances(data.instances);
+                    updateStats(data.instances);
+                }
+            } catch (error) {
+                console.error('加载失败:', error);
+                document.getElementById('instances-grid').innerHTML = 
+                    '<div class="loading">❌ 加载失败，请刷新</div>';
+            }
+        }
+
+        function updateStats(instances) {
+            const total = instances.length;
+            const running = instances.filter(i => i.status === 'running').length;
+            const stopped = instances.filter(i => i.status === 'stopped').length;
+            const crashed = instances.filter(i => i.status === 'crashed').length;
+
+            document.getElementById('total-instances').textContent = total;
+            document.getElementById('running-count').textContent = running;
+            document.getElementById('stopped-count').textContent = stopped;
+            document.getElementById('crashed-count').textContent = crashed;
+        }
+
+        function renderInstances(instances) {
+            const grid = document.getElementById('instances-grid');
+            
+            if (instances.length === 0) {
+                grid.innerHTML = '<div class="loading">📭 暂无实例配置</div>';
+                return;
+            }
+
+            grid.innerHTML = instances.map(inst => `
+                <div class="instance-card ${inst.status}">
+                    <div class="instance-header">
+                        <span class="instance-name">${inst.name}</span>
+                        <span class="instance-status status-${inst.status}">${inst.status}</span>
+                    </div>
+                    <div class="instance-info">
+                        <div>🆔 ID: ${inst.id}</div>
+                        <div>🌐 端口：${inst.port}</div>
+                        <div>📁 工作区：${inst.workspace}</div>
+                        <div>🔄 重启次数：${inst.restart_count || 0}</div>
+                        <div>⏱️ 运行时长：${formatUptime(inst.uptime_seconds)}</div>
+                    </div>
+                    <div class="instance-actions">
+                        ${inst.status === 'running' ? `
+                            <button class="btn btn-stop" onclick="stopInstance('${inst.id}')">⏹️ 停止</button>
+                            <button class="btn btn-restart" onclick="restartInstance('${inst.id}')">🔄 重启</button>
+                        ` : `
+                            <button class="btn btn-start" onclick="startInstance('${inst.id}')">▶️ 启动</button>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatUptime(seconds) {
+            if (!seconds) return '0s';
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = Math.floor(seconds % 60);
+            if (h > 0) return `${h}h ${m}m`;
+            if (m > 0) return `${m}m ${s}s`;
+            return `${s}s`;
+        }
+
+        async function startInstance(id) {
+            await fetch(`${API_BASE}/instances/${id}`, { method: 'POST' });
+            setTimeout(loadInstances, 1000);
+        }
+
+        async function stopInstance(id) {
+            await fetch(`${API_BASE}/instances/${id}`, { method: 'DELETE' });
+            setTimeout(loadInstances, 1000);
+        }
+
+        async function restartInstance(id) {
+            await stopInstance(id);
+            await startInstance(id);
+        }
+
+        // 初始加载
+        loadInstances();
+
+        // 每 30 秒自动刷新
+        setInterval(loadInstances, 30000);
+    </script>
+</body>
+</html>
