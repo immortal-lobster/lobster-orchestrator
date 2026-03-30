@@ -2,11 +2,19 @@ package instance
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"sync"
 	"syscall"
 	"time"
+)
+
+var (
+	// 日志记录器
+	infoLog  = log.New(os.Stdout, "🦞 INFO [orchestrator] ", log.Ldate|log.Ltime)
+	errorLog = log.New(os.Stderr, "❌ ERROR [orchestrator] ", log.Ldate|log.Ltime)
+	warnLog  = log.New(os.Stderr, "⚠️  WARN [orchestrator] ", log.Ldate|log.Ltime)
 )
 
 // Instance 表示一个 PicoClaw 实例
@@ -21,27 +29,31 @@ type Instance struct {
 	AutoStart     bool   `yaml:"auto_start"`
 
 	// 运行时状态
-	PID        int       `json:"pid"`
-	Status     string    `json:"status"` // running, stopped, crashed
-	StartTime  time.Time `json:"start_time"`
-	RestartCount int     `json:"restart_count"`
+	PID          int       `json:"pid"`
+	Status       string    `json:"status"` // running, stopped, crashed
+	StartTime    time.Time `json:"start_time"`
+	RestartCount int       `json:"restart_count"`
+	LastError    string    `json:"last_error,omitempty"`
 
 	// 内部字段
-	cmd    *exec.Cmd
-	mutex  sync.RWMutex
+	cmd   *exec.Cmd
+	mutex sync.RWMutex
 }
 
 // Manager 管理所有实例
 type Manager struct {
-	Instances    map[string]*Instance
-	ConfigPath   string
-	mutex        sync.RWMutex
+	Instances  map[string]*Instance
+	ConfigPath string
+	mutex      sync.RWMutex
 }
 
 // NewManager 创建实例管理器
 func NewManager(configPath string) (*Manager, error) {
+	infoLog.Printf("加载配置文件：%s", configPath)
+	
 	config, err := LoadConfig(configPath)
 	if err != nil {
+		errorLog.Printf("加载配置失败：%v", err)
 		return nil, err
 	}
 
@@ -60,6 +72,7 @@ func NewManager(configPath string) (*Manager, error) {
 		}
 	}
 
+	infoLog.Printf("✅ 加载 %d 个实例配置", len(instances))
 	return &Manager{
 		Instances:  instances,
 		ConfigPath: configPath,
@@ -77,16 +90,21 @@ func (m *Manager) Start(id string) error {
 	}
 
 	if inst.Status == "running" {
-		return fmt.Errorf("实例 %s 已在运行", id)
+		warnLog.Printf("实例 %s 已在运行 (PID: %d)", inst.Name, inst.PID)
+		return nil
 	}
+
+	infoLog.Printf("🚀 启动实例：%s (端口：%d)", inst.Name, inst.Port)
 
 	// 确保 workspace 目录存在
 	if err := os.MkdirAll(inst.Workspace, 0755); err != nil {
+		inst.Status = "crashed"
+		inst.LastError = fmt.Sprintf("创建工作目录失败：%v", err)
+		errorLog.Printf("实例 %s 工作目录创建失败：%v", inst.Name, err)
 		return fmt.Errorf("创建工作目录失败：%v", err)
 	}
 
 	// 构建 PicoClaw 启动命令
-	// 假设 PicoClaw 二进制在 /usr/local/bin/picoclaw
 	cmd := exec.Command("/usr/local/bin/picoclaw", "serve", "--port", fmt.Sprintf("%d", inst.Port))
 	cmd.Dir = inst.Workspace
 	cmd.Env = append(os.Environ(),
@@ -100,6 +118,9 @@ func (m *Manager) Start(id string) error {
 	// 启动进程
 	if err := cmd.Start(); err != nil {
 		inst.Status = "crashed"
+		inst.LastError = fmt.Sprintf("启动失败：%v", err)
+		inst.RestartCount++
+		errorLog.Printf("实例 %s 启动失败 (第 %d 次): %v", inst.Name, inst.RestartCount, err)
 		return fmt.Errorf("启动失败：%v", err)
 	}
 
@@ -107,8 +128,9 @@ func (m *Manager) Start(id string) error {
 	inst.PID = cmd.Process.Pid
 	inst.Status = "running"
 	inst.StartTime = time.Now()
+	inst.LastError = ""
 
-	fmt.Printf("✅ 实例 %s 已启动 (PID: %d, Port: %d)\n", inst.Name, inst.PID, inst.Port)
+	infoLog.Printf("✅ 实例 %s 已启动 (PID: %d, Port: %d)", inst.Name, inst.PID, inst.Port)
 	return nil
 }
 
@@ -123,16 +145,30 @@ func (m *Manager) Stop(id string) error {
 	}
 
 	if inst.Status != "running" {
+		warnLog.Printf("实例 %s 未在运行 (状态：%s)", inst.Name, inst.Status)
 		return nil
 	}
 
+	infoLog.Printf("⏹️  停止实例：%s (PID: %d)", inst.Name, inst.PID)
+
 	// 杀死进程组
 	if inst.cmd != nil && inst.cmd.Process != nil {
+		// 先尝试优雅退出
 		syscall.Kill(-inst.cmd.Process.Pid, syscall.SIGTERM)
-		time.Sleep(2 * time.Second)
+		
+		// 等待最多 5 秒
+		for i := 0; i < 10; i++ {
+			if inst.cmd.ProcessState != nil {
+				break  // 已退出
+			}
+			time.Sleep(500 * time.Millisecond)
+		}
+		
 		// 如果还没死，强制杀死
 		if inst.cmd.ProcessState == nil {
+			warnLog.Printf("实例 %s 未响应 SIGTERM，发送 SIGKILL", inst.Name)
 			syscall.Kill(-inst.cmd.Process.Pid, syscall.SIGKILL)
+			time.Sleep(1 * time.Second)
 		}
 	}
 
@@ -140,12 +176,13 @@ func (m *Manager) Stop(id string) error {
 	inst.PID = 0
 	inst.cmd = nil
 
-	fmt.Printf("⏹️  实例 %s 已停止\n", inst.Name)
+	infoLog.Printf("✅ 实例 %s 已停止", inst.Name)
 	return nil
 }
 
 // Restart 重启实例
 func (m *Manager) Restart(id string) error {
+	infoLog.Printf("🔄 重启实例：%s", id)
 	if err := m.Stop(id); err != nil {
 		return err
 	}
@@ -155,24 +192,30 @@ func (m *Manager) Restart(id string) error {
 
 // AutoStart 自动启动所有标记为 auto_start 的实例
 func (m *Manager) AutoStart() {
+	infoLog.Printf("🚀 开始自动启动...")
+	count := 0
 	for id := range m.Instances {
 		inst := m.Instances[id]
 		if inst.AutoStart {
 			go func(id string) {
 				if err := m.Start(id); err != nil {
-					fmt.Printf("❌ 自动启动 %s 失败：%v\n", id, err)
+					errorLog.Printf("自动启动 %s 失败：%v", id, err)
 				}
 			}(id)
-			time.Sleep(100 * time.Millisecond) // 避免同时启动冲击
+			count++
+			time.Sleep(200 * time.Millisecond) // 避免同时启动冲击
 		}
 	}
+	infoLog.Printf("✅ 自动启动完成 (%d 个实例)", count)
 }
 
 // StopAll 停止所有实例
 func (m *Manager) StopAll() {
+	infoLog.Printf("👋 正在关闭所有实例...")
 	for id := range m.Instances {
 		m.Stop(id)
 	}
+	infoLog.Printf("✅ 所有实例已关闭")
 }
 
 // GetStatus 获取实例状态
@@ -188,6 +231,11 @@ func (m *Manager) GetStatus(id string) (map[string]interface{}, error) {
 	inst.mutex.RLock()
 	defer inst.mutex.RUnlock()
 
+	uptime := float64(0)
+	if !inst.StartTime.IsZero() && inst.Status == "running" {
+		uptime = time.Since(inst.StartTime).Seconds()
+	}
+
 	return map[string]interface{}{
 		"id":             inst.ID,
 		"name":           inst.Name,
@@ -197,7 +245,8 @@ func (m *Manager) GetStatus(id string) (map[string]interface{}, error) {
 		"workspace":      inst.Workspace,
 		"start_time":     inst.StartTime,
 		"restart_count":  inst.RestartCount,
-		"uptime_seconds": time.Since(inst.StartTime).Seconds(),
+		"last_error":     inst.LastError,
+		"uptime_seconds": uptime,
 	}, nil
 }
 
@@ -228,10 +277,18 @@ func (m *Manager) CheckHealth(id string) bool {
 	// 检查进程是否还活着
 	if inst.cmd != nil && inst.cmd.ProcessState != nil {
 		// 进程已退出
+		warnLog.Printf("实例 %s 崩溃 (PID: %d)", inst.Name, inst.PID)
 		inst.Status = "crashed"
 		inst.RestartCount++
 		return false
 	}
 
 	return true
+}
+
+// ReloadConfig 重新加载配置 (未来功能)
+func (m *Manager) ReloadConfig() error {
+	infoLog.Printf("📋 重新加载配置...")
+	// TODO: 实现配置热重载
+	return fmt.Errorf("未实现")
 }
