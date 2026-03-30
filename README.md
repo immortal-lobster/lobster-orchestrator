@@ -1,8 +1,14 @@
 # 🦞 Lobster Orchestrator - 不死龙虾编排器
 
-**版本**: V0.1.0  
+**版本**: V0.2.3  
 **创建时间**: 2026-03-30  
-**目标**: 手机运行 50 个 PicoClaw 实例
+**目标**: 手机运行 50 个 PicoClaw 实例  
+**状态**: 🟡 代码完成，待编译测试
+
+[![Version](https://img.shields.io/badge/version-0.2.3-blue.svg)](https://github.com/immortal-lobster/lobster-orchestrator/releases)
+[![Go Code](https://img.shields.io/badge/code-~800%20lines-green.svg)](https://github.com/immortal-lobster/lobster-orchestrator)
+[![Docs](https://img.shields.io/badge/docs-9%20files-orange.svg)](docs/)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
 
 ---
 
