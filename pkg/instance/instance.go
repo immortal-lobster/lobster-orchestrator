@@ -57,6 +57,19 @@ func NewManager(configPath string) (*Manager, error) {
 		return nil, err
 	}
 
+	// 验证配置
+	if err := ValidateConfig(config); err != nil {
+		errorLog.Printf("配置验证失败：%v", err)
+		return nil, err
+	}
+	infoLog.Printf("✅ 配置验证通过")
+
+	// 验证工作目录
+	if err := ValidateAllWorkspaces(config); err != nil {
+		warnLog.Printf("工作目录验证警告：%v", err)
+		// 不阻断启动，继续执行
+	}
+
 	instances := make(map[string]*Instance)
 	for _, cfg := range config.Instances {
 		instances[cfg.ID] = &Instance{
