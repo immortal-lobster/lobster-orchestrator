@@ -24,7 +24,7 @@ for i in $(seq 1 $COUNT); do
     cat >> configs/instances.yaml << EOF
   - id: "$id"
     name: "Sandbot #$i"
-    workspace: "/data/workspaces/$id"
+    workspace: "data/workspaces/$id"
     port: $port
     model: "qwen3.5-plus"
     api_key_env: "BAILOU_API_KEY_$i"
