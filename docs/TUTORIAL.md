@@ -47,7 +47,36 @@ uname -a
 
 ### 方式 A: 自动安装 (推荐)
 
-**一行命令搞定**:
+**⚠️ 前提条件：先安装 PicoClaw！**
+
+```bash
+# 1. 安装 PicoClaw (AI Agent 运行时)
+wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz
+tar xzf picoclaw_Linux_arm64.tar.gz
+mkdir -p $HOME/bin
+mv picoclaw $HOME/bin/
+chmod +x $HOME/bin/picoclaw
+
+# 2. 配置 PicoClaw
+mkdir -p ~/.picoclaw
+cat > ~/.picoclaw/config.json << 'EOF'
+{
+  "model": {
+    "provider": "bailian",
+    "name": "qwen3.5-plus"
+  },
+  "api_key": "你的 API Key"
+}
+EOF
+
+# 3. 设置环境变量
+export PICOCLAW_PATH=$HOME/bin/picoclaw
+
+# 4. 安装 Lobster Orchestrator (编排器)
+curl -sL https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/master/scripts/install.sh | bash
+```
+
+**一行命令搞定 (已安装 PicoClaw 后)**:
 
 ```bash
 # Android/Termux
