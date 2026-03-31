@@ -67,12 +67,18 @@ fi
 # 显示更新日志
 echo ""
 echo "📝 更新日志:"
-curl -s https://api.github.com/repos/immortal-lobster/lobster-orchestrator/releases/latest | grep '"body"' | cut -d'"' -f4
-
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+curl -s https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/master/CHANGELOG.md | head -50
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "📚 完整升级指南：https://github.com/immortal-lobster/lobster-orchestrator/blob/main/docs/UPGRADE.md"
 echo ""
 echo "✅ 升级完成！"
 echo "📊 新版本：v$LATEST_VERSION"
 echo ""
 echo "🚀 重启服务:"
 echo "   ./orchestrator -config configs/instances.yaml"
+echo ""
+echo "🔍 检查版本:"
+echo "   curl http://localhost:8080/api/v1/version"
 echo ""
