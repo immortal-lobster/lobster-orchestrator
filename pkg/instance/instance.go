@@ -118,11 +118,25 @@ func (m *Manager) Start(id string) error {
 	}
 
 	// 构建 PicoClaw 启动命令
-	cmd := exec.Command("/usr/local/bin/picoclaw", "serve", "--port", fmt.Sprintf("%d", inst.Port))
+	// 优先使用环境变量 PICOCLAW_PATH，否则使用默认路径
+	picoclawPath := os.Getenv("PICOCLAW_PATH")
+	if picoclawPath == "" {
+		// 尝试从 PATH 中查找
+		path, err := exec.LookPath("picoclaw")
+		if err != nil {
+			// 默认路径
+			picoclawPath = "/usr/local/bin/picoclaw"
+		} else {
+			picoclawPath = path
+		}
+	}
+	
+	cmd := exec.Command(picoclawPath, "serve", "--port", fmt.Sprintf("%d", inst.Port))
 	cmd.Dir = inst.Workspace
 	cmd.Env = append(os.Environ(),
 		fmt.Sprintf("PORT=%d", inst.Port),
 		fmt.Sprintf("WORKSPACE=%s", inst.Workspace),
+		fmt.Sprintf("PICOCLAW_PATH=%s", picoclawPath),
 	)
 
 	// 设置进程组 (便于后续杀死整个进程树)
