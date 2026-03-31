@@ -26,9 +26,7 @@
 
 ---
 
-## 🚀 快速开始
-
-### ⚠️ 重要提示
+## ⚠️ 重要提示
 
 **Lobster Orchestrator 是编排器，需要先安装 PicoClaw！**
 
@@ -55,6 +53,10 @@ EOF
 # 3. 设置环境变量
 export PICOCLAW_PATH=$HOME/bin/picoclaw
 ```
+
+---
+
+## 🚀 快速开始
 
 ### 方式 A: 一键安装 (推荐)
 
@@ -114,6 +116,8 @@ cd /home/node/.openclaw/workspace/immortal-lobster/lobster-orchestrator
 | [🔄 迁移指南](docs/MIGRATION.md) | OpenClaw 双向迁移 |
 | [📦 部署指南](docs/DEPLOYMENT_GUIDE.md) | PicoClaw 部署步骤 |
 | [📝 变更日志](CHANGELOG.md) | 版本历史/更新记录 |
+| [🦞 PicoClaw 安装](docs/PICOCLAW_INSTALL.md) | PicoClaw 安装指南 |
+| [🔢 50 实例部署](docs/50_INSTANCES.md) | 管理 50 个实例 |
 
 ### 🛠️ 脚本工具
 
@@ -127,6 +131,7 @@ cd /home/node/.openclaw/workspace/immortal-lobster/lobster-orchestrator
 | `export-to-picoclaw.sh` | PicoClaw 导出 (冷冻包) |
 | `stress-test.sh` | 50 实例压力测试 |
 | `monitor.sh` | 性能监控 |
+| `generate-config.sh` | 生成实例配置 |
 
 ---
 
@@ -134,12 +139,12 @@ cd /home/node/.openclaw/workspace/immortal-lobster/lobster-orchestrator
 
 | 指标 | 数量 |
 |------|------|
-| **Git 提交** | 16 次 |
+| **Git 提交** | 19 次 |
 | **Go 代码** | 766 行 |
-| **脚本工具** | 8 个 |
-| **文档** | 12 个 |
-| **总文件** | 28 个 |
-| **项目大小** | ~900KB |
+| **脚本工具** | 9 个 |
+| **文档** | 14 个 |
+| **总文件** | 30 个 |
+| **项目大小** | ~950KB |
 
 ---
 
@@ -149,6 +154,8 @@ cd /home/node/.openclaw/workspace/immortal-lobster/lobster-orchestrator
 
 | 版本 | 日期 | 核心功能 |
 |------|------|----------|
+| **V0.3.4** | 2026-03-31 | 🆕 完善文档 (PicoClaw 前置说明/50 实例指南) |
+| **V0.3.3** | 2026-03-31 | 🆕 PicoClaw 路径可配置 |
 | **V0.3.2** | 2026-03-31 | 🆕 PicoClaw 完整导出工具 (冷冻包 + 自动转换) |
 | **V0.3.1** | 2026-03-31 | 🆕 OpenClaw 迁移工具 (双向迁移) |
 | **V0.3.0** | 2026-03-31 | 🆕 小白友好版 (一键安装/备份恢复/教程) |
@@ -239,7 +246,7 @@ ls data/lobster-workspace/
 scp -r data/exports/picoclaw-* user@picoclaw:~/
 
 # 部署
-./DEPLOYMENT_GUIDE.md
+cat docs/DEPLOYMENT_GUIDE.md
 ```
 
 **导出内容**: 冷冻包 + PicoClaw 兼容格式
@@ -267,6 +274,8 @@ global:
   log_level: "info"
   max_instances: 50
 ```
+
+**⚠️ 注意**: workspace 使用相对路径 (`data/workspaces/`)，不是绝对路径 (`/data/workspaces/`)，避免权限问题！
 
 ---
 
@@ -316,4 +325,4 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 **🦞 项目地址**: https://github.com/immortal-lobster/lobster-orchestrator
 
-**📅 最后更新**: 2026-03-31 (V0.3.2)
+**📅 最后更新**: 2026-03-31 (V0.3.4)
