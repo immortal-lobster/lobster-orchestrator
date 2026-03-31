@@ -160,6 +160,9 @@
             <button class="btn btn-primary" onclick="showImportModal()">
                 📥 OpenClaw 导入
             </button>
+            <button class="btn btn-primary" onclick="checkPicoClaw()">
+                🦞 PicoClaw 检查
+            </button>
             <button class="btn btn-primary" onclick="startAll()">
                 ▶️ 全部启动
             </button>
@@ -229,6 +232,26 @@
             <div class="modal-footer">
                 <button class="btn" onclick="closeModal('import-modal')">取消</button>
                 <button class="btn btn-primary" onclick="importOpenClaw()">导入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PicoClaw 模态框 -->
+    <div class="modal" id="picoclaw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🦞 PicoClaw 状态</h2>
+                <button class="modal-close" onclick="closeModal('picoclaw-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="picoclaw-status">
+                    <div class="loading">🔄 检查中...</div>
+                </div>
+                <div class="log-output" id="picoclaw-log"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('picoclaw-modal')">关闭</button>
+                <button class="btn btn-success" id="picoclaw-install-btn" onclick="installPicoClaw()" style="display:none;">🚀 安装</button>
             </div>
         </div>
     </div>
@@ -473,6 +496,77 @@
             } catch (error) {
                 log('import-log', `❌ 错误：${error.message}`, 'error');
             }
+        }
+
+        // PicoClaw 检查
+        async function checkPicoClaw() {
+            document.getElementById('picoclaw-modal').classList.add('show');
+            const statusDiv = document.getElementById('picoclaw-status');
+            const installBtn = document.getElementById('picoclaw-install-btn');
+            
+            try {
+                const res = await fetch(`${API_BASE}/picoclaw/check`);
+                const data = await res.json();
+                
+                if (data.success) {
+                    const status = data.status;
+                    if (data.needs_install) {
+                        statusDiv.innerHTML = `
+                            <div style="padding: 20px; text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 10px;">🦞</div>
+                                <div style="font-size: 18px; margin-bottom: 10px;">PicoClaw 未安装</div>
+                                <div style="opacity: 0.7; margin-bottom: 20px;">需要安装 PicoClaw 才能运行实例</div>
+                            </div>
+                        `;
+                        installBtn.style.display = 'inline-block';
+                    } else {
+                        statusDiv.innerHTML = `
+                            <div style="padding: 20px;">
+                                <div style="color: #00c853; font-size: 18px; margin-bottom: 10px;">✅ PicoClaw 已安装</div>
+                                <div style="margin-bottom: 5px;"><strong>版本:</strong> ${status.version || 'unknown'}</div>
+                                <div style="margin-bottom: 5px;"><strong>路径:</strong> ${status.path || 'unknown'}</div>
+                                <div><strong>安装位置:</strong> ${status.install_path}</div>
+                            </div>
+                        `;
+                        installBtn.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<div style="color: #ff5252;">❌ 检查失败：${error.message}</div>`;
+            }
+        }
+
+        // 安装 PicoClaw
+        async function installPicoClaw() {
+            const logDiv = document.getElementById('picoclaw-log');
+            const installBtn = document.getElementById('picoclaw-install-btn');
+            
+            installBtn.disabled = true;
+            log(logDiv, '🚀 开始安装 PicoClaw...', 'info');
+            
+            try {
+                const res = await fetch(`${API_BASE}/picoclaw/install`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ version: 'latest' })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    log(logDiv, `✅ 安装完成`, 'success');
+                    log(logDiv, data.output, 'info');
+                    setTimeout(() => {
+                        checkPicoClaw();
+                    }, 2000);
+                } else {
+                    log(logDiv, `❌ 安装失败：${data.error}`, 'error');
+                    log(logDiv, data.output, 'error');
+                }
+            } catch (error) {
+                log(logDiv, `❌ 错误：${error.message}`, 'error');
+            }
+            
+            installBtn.disabled = false;
         }
 
         // 关闭模态框
