@@ -26,6 +26,9 @@ func StartServer(port int, manager *instance.Manager) {
 	http.HandleFunc("/api/v1/instances", s.InstancesHandler)
 	http.HandleFunc("/api/v1/instances/", s.InstanceHandler)
 	http.HandleFunc("/api/v1/health", s.HealthHandler)
+	http.HandleFunc("/api/v1/picoclaw/status", PicoClawStatusHandler)
+	http.HandleFunc("/api/v1/picoclaw/install", PicoClawInstallHandler)
+	http.HandleFunc("/api/v1/picoclaw/check", PicoClawCheckHandler)
 
 	// 静态文件 (Dashboard)
 	fs := http.FileServer(http.Dir("web"))
