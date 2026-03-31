@@ -32,8 +32,10 @@
 
 ```bash
 # Android/Termux 或 Linux
-curl -sL https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/main/scripts/install.sh | bash
+curl -sL https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/master/scripts/install.sh | bash
 ```
+
+**注意**: 使用 `master` 分支，不是 `main`！
 
 ### 方式 B: 手动安装
 
