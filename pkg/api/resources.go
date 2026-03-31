@@ -3,16 +3,10 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
-	"os/exec"
-	"path/filepath"
-	"sort"
 	"strconv"
 	"strings"
 	"syscall"
-
-	"lobster-orchestrator/pkg/instance"
 )
 
 // ResourceStats 资源统计
@@ -29,41 +23,8 @@ type BackupInfo struct {
 	Date string `json:"date"`
 }
 
-// StartServer 启动 API 服务器
-func StartServer(port int, manager *instance.Manager) {
-	http.HandleFunc("/", RootHandler)
-	http.HandleFunc("/api/v1/instances", InstancesHandler)
-	http.HandleFunc("/api/v1/instances/", InstanceHandler)
-	http.HandleFunc("/api/v1/health", HealthHandler)
-	http.HandleFunc("/api/v1/resources", ResourcesHandler)
-	http.HandleFunc("/api/v1/backup", BackupHandler)
-	http.HandleFunc("/api/v1/backups", ListBackupsHandler)
-	http.HandleFunc("/api/v1/restore", RestoreHandler)
-	http.HandleFunc("/api/v1/import/openclaw", ImportOpenClawHandler)
-
-	// 静态文件 (Dashboard)
-	fs := http.FileServer(http.Dir("web"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-	log.Printf("🌐 API 服务器监听端口 %d", port)
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil); err != nil {
-		log.Fatalf("API 服务器失败：%v", err)
-	}
-}
-
-// ResourcesHandler 资源统计
-func ResourcesHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	stats := getResourceStats()
-	json.NewEncoder(w).Encode(map[string]interface{}{
-		"success":   true,
-		"resources": stats,
-	})
-}
-
-// getResourceStats 获取资源统计
-func getResourceStats() ResourceStats {
+// GetResourceStats 获取资源统计
+func GetResourceStats() ResourceStats {
 	stats := ResourceStats{}
 
 	// 内存 (从 /proc/meminfo)
