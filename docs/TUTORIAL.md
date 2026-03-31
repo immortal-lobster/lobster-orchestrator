@@ -51,11 +51,13 @@ uname -a
 
 ```bash
 # Android/Termux
-curl -sL https://github.com/immortal-lobster/lobster-orchestrator/raw/main/scripts/install.sh | bash
+curl -sL https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/master/scripts/install.sh | bash
 
 # Linux
-curl -sL https://github.com/immortal-lobster/lobster-orchestrator/raw/main/scripts/install.sh | sudo bash
+curl -sL https://raw.githubusercontent.com/immortal-lobster/lobster-orchestrator/master/scripts/install.sh | sudo bash
 ```
+
+**注意**: 使用 `master` 分支，不是 `main`！
 
 **安装过程**:
 ```
