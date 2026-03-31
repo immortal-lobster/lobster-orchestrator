@@ -39,7 +39,7 @@ func StartServer(port int, manager *instance.Manager) {
 
 // RootHandler 根路径
 func (s *Server) RootHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" {
+	if r.URL.Path == "/" || r.URL.Path == "/index.html" {
 		http.ServeFile(w, r, "web/dashboard.html")
 		return
 	}
