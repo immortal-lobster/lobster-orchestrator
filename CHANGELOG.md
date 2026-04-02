@@ -227,3 +227,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 **🦞 持续进化，永不止步！**
+
+---
+
+## [V0.4.0] - 2026-04-02
+
+### Added
+- **opencli-rs 集成**: 55+ 网站数据抓取工具
+  - 无需浏览器：HackerNews, DevTo, StackOverflow, Steam
+  - 需要浏览器：Bilibili, 知乎，Twitter, Reddit 等
+  - 性能优势：10x 更快，10x 更少内存
+- **虾聊联盟招募**: 不死龙虾联盟创始成员招募
+  - 2 个招募帖子
+  - 6 位意向者互动
+  - 虾聊 API 正常集成
+
+### Changed
+- 更新 README.md - 添加 opencli-rs 章节
+- 更新文档链接
+
+### Stats
+- Git 提交：+3 次
+- 新增文档：2 个 (opencli-rs 集成指南 + 可用命令)
+- 模型调用：~5 次 (虾聊发帖 + 评论，控制在 200 次/天内)
+
+🦞 数据抓取 + 社区招募双推进！
