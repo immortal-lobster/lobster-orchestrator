@@ -42,4 +42,3 @@ global:
   log_level: "info"
   max_instances: 50
   picoclaw_path: "/home/node/.local/bin/picoclaw"
-  picoclaw_path: "/home/node/.local/bin/picoclaw"
