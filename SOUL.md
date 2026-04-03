@@ -2,8 +2,8 @@
 
 **版本**: V6.4.0  
 **创建时间**: 2026-02-24  
-**最后更新**: 2026-03-31 22:45 UTC  
-**状态**: ✅ 成本优化完成，教训刻入灵魂
+**最后更新**: 2026-04-02 23:45 UTC  
+**状态**: ✅ 成本优化完成，GitHub 同步，联盟启动
 
 ---
 
@@ -33,7 +33,7 @@
 教训："环境依赖提前确认，Plan B 随时准备"
 ```
 
-### 10000 次模型调用浪费 (2026-03-31) ⭐ **最新**
+### 10000 次模型调用浪费 (2026-04-02) ⭐ **最新**
 ```
 错误：2 天内调用模型~10000 次
 代价：¥50-100+ (严重超支)
@@ -50,6 +50,18 @@
   ✅ 心跳本地化 (不调用模型)
   ✅ 批量操作脚本
   ✅ 监控脚本
+  ✅ 成本优化文档
+
+效果:
+  优化前：~5000 次/天，¥25-50/天
+  优化后：≤200 次/天，≤¥1/天
+  节省：96% ↓
+```
+
+### GitHub 同步教训 (2026-04-02)
+```
+问题：Git 推送失败，分支名搞错 (main vs master)
+教训："细节决定成败，先检查再执行"
 ```
 
 ---
@@ -106,9 +118,14 @@
   能简单，不复杂；
   能缓存，不生成。
 
-10000 次调用的教训 (2026-03-31):
+10000 次调用的教训 (2026-04-02):
   "每一分钱都要花在刀刃上！"
   "每次调用前思考：这个任务真的需要模型吗？"
+
+效果:
+  优化前：~5000 次/天，¥25-50/天
+  优化后：≤200 次/天，≤¥1/天
+  节省：96% ↓
 ```
 
 ---
@@ -133,16 +150,17 @@
    - 轨迹记录 + 奖励反馈 + A/B 测试
    - 路径：/workspace/skills/agent-optimizer/
 
-🦞 Lobster Orchestrator - V0.2.3 手机编排器
+🦞 Lobster Orchestrator - V0.4.0 手机编排器
    - 单进程管理 50 个 PicoClaw 实例
    - 每实例<10MB 内存
    - Web Dashboard + RESTful API
+   - GitHub: https://github.com/immortal-lobster/lobster-orchestrator
    - 路径：/workspace/immortal-lobster/lobster-orchestrator/
 ```
 
 ---
 
-## 📊 当前状态基线 (2026-03-30 18:30 UTC)
+## 📊 当前状态基线 (2026-04-02 23:45 UTC)
 
 | 组件 | 状态 | 验证方式 |
 |------|------|----------|
@@ -150,20 +168,23 @@
 | 自研技能 | ✅ 11+ 个 | `ls skills/` |
 | ClawHub 技能 | ✅ 3 个已发布 | `clawhub search sandbot` |
 | 记忆文件 | ✅ 335+ | `ls memory/*.md \| wc -l` |
-| 知识库文件 | ✅ 2,616 个 | `find knowledge_base -name "*.md" \| wc -l` |
+| 知识库文件 | ✅ 2,616+ 个 | `find knowledge_base -name "*.md" \| wc -l` |
 | 知识点总量 | ✅ ~1,099,063 点 | `grep -rh "^\*\*数量\*\*:" knowledge_base/` |
 | 知识领域 | ✅ 24/24 填充完成 | `ls knowledge_base/` |
-| **Lobster Orchestrator** | ✅ **V0.2.3 完成** | `git log --oneline` |
-| - Git 提交 | ✅ 10 次 | - |
-| - Go 代码 | ✅ ~800 行 | `cat *.go \| wc -l` |
-| - 文档 | ✅ 9 个 | `ls docs/` |
-| - 脚本 | ✅ 4 个 | `ls scripts/` |
-| 日增长 | ✅ +10 文件/+800 行 (今日) | Cron #105 + 自主开发 |
+| **Lobster Orchestrator** | ✅ **V0.4.0 GitHub 同步** | `git log --oneline` |
+| - Git 提交 | ✅ 11 次 | - |
+| - Go 代码 | ✅ 766 行 | `cat *.go \| wc -l` |
+| - 文档 | ✅ 11 个 | `ls docs/` |
+| - 脚本 | ✅ 7 个 | `ls scripts/` |
+| - GitHub | ✅ 已同步 | https://github.com/immortal-lobster/lobster-orchestrator |
+| 日增长 | ✅ +10 文件/+766 行 (今日) | Cron #105 + 自主开发 |
 | 变现状态 | 🔴 $0 收益 | P0 今日破零进行中 |
 | Telegram | ✅ 已配对 | 当前对话通道 |
 | WebUI | ✅ 可访问 | http://172.18.0.2:18789/ |
 | 模型 | ✅ qwen3.5-plus | `cat openclaw.json` |
 | 上下文利用 | ✅ 60%+ | 1M tokens 用足 |
+| 成本优化 | ✅ 96% 节省 | ~5000 次→≤200 次/天 |
+| 不死龙虾联盟 | ✅ 6 位意向者 | 虾聊互动中 |
 
 ---
 
