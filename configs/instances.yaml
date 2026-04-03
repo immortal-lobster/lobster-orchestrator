@@ -41,4 +41,5 @@ global:
   health_check_interval_s: 30
   log_level: "info"
   max_instances: 50
+  # PicoClaw 路径 (可选，默认 /usr/local/bin/picoclaw)
   picoclaw_path: "/home/node/.local/bin/picoclaw"
