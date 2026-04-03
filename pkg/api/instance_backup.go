@@ -98,6 +98,12 @@ func InstanceRestoreHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// 设置 PicoClaw 路径
+	picoclawPath := os.Getenv("PICOCLAW_PATH")
+	if picoclawPath == "" {
+		picoclawPath = "/usr/local/bin/picoclaw"
+	}
+	
 	// 还原工作区
 	backupDir := fmt.Sprintf("data/backups/instances/%s", req.BackupName)
 	workspace := fmt.Sprintf("data/workspaces/%s", req.InstanceID)

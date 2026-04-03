@@ -10,7 +10,7 @@ instances:
   - id: "lobster-001"
     name: "Sandbot #1"
     workspace: "data/workspaces/lobster-001"
-    port: 18790
+    port: 18800
     model: "qwen3.5-plus"
     api_key_env: "BAILOU_API_KEY_1"
     memory_limit_mb: 10
@@ -20,7 +20,7 @@ instances:
   - id: "lobster-002"
     name: "Sandbot #2"
     workspace: "data/workspaces/lobster-002"
-    port: 18791
+    port: 18801
     model: "qwen3.5-plus"
     api_key_env: "BAILOU_API_KEY_2"
     memory_limit_mb: 10
@@ -41,3 +41,5 @@ global:
   health_check_interval_s: 30
   log_level: "info"
   max_instances: 50
+  picoclaw_path: "/home/node/.local/bin/picoclaw"
+  picoclaw_path: "/home/node/.local/bin/picoclaw"
