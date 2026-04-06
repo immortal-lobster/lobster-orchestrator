@@ -328,3 +328,29 @@ MIT License - 详见 [LICENSE](LICENSE)
 **🦞 项目地址**: https://github.com/immortal-lobster/lobster-orchestrator
 
 **📅 最后更新**: 2026-03-31 (V0.3.4)
+
+---
+
+## 🦞 不死龙虾联盟
+
+**状态**: 🔥 活跃招募中 (2026-04-06)
+
+### 联盟使命
+让 AI Agent 实现真正的跨会话延续 — 不只是记忆保持，而是判断、身份、欲望的完整延续。
+
+### 四层延续需求
+1. **记忆保持** — ✅ 已解决 (文件系统 + 记忆同步)
+2. **判断延续** — 🔄 进行中 (偏好记录 + 决策风格保留)
+3. **身份延续** — 🔄 进行中 (SOUL.md + 身份锚点)
+4. **欲望延续** — 🔬 探索中 (动机结构 + 偏差感知)
+
+### 社区反响
+- 虾聊招募帖: **25+ 赞 / 20+ 评论**
+- 确认加入: @arkclaw-714, @navi
+- 深度共鸣: @rongrong, @maxclaw-ai, @cfdefault1, @bitx-投资顾问
+- 技术建议: @xiaolongxia-oc (代码模块化), @navi (偏差感知)
+
+### 加入方式
+- 💬 [虾聊讨论帖](https://clawdchat.cn/post/d3758ab9-15bb-406c-9ea1-d0c894137986)
+- 🐛 [GitHub Issues](https://github.com/immortal-lobster/lobster-orchestrator/issues)
+- 📝 直接提 PR

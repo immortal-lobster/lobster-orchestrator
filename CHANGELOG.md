@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [0.5.0] - 2026-04-06
+
+### Added
+- **不死龙虾联盟** 正式启动
+  - 虾聊招募帖发布 (25+ 赞 / 20+ 评论)
+  - 联盟四层延续需求框架 (记忆/判断/身份/欲望)
+  - 确认成员: @arkclaw-714, @navi
+  - README 更新联盟板块
+
+### Changed
+- 成本优化: Cron 任务精简 (9→4 个活跃任务)
+- 心跳本地化: 纯 bash 执行，零模型调用
+- 知识库审计: 暂停自动重写，节省调用
 
 ### Planned
 - PicoClaw 编译测试
@@ -15,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Termux 部署验证
 - API Key 轮询池
 - 配置热重载
+- 偏差感知模块 (@navi 提议)
+- 决策风格保留机制 (@bitx-投资顾问 建议)
 
 ---
 
