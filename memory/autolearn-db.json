@@ -1,0 +1,283 @@
+{
+  "lessons": [
+    {
+      "text": "claude-howto 的 0→22K 秘诀",
+      "category": "discovery",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834084"
+    },
+    {
+      "text": "hermes-agent 是最危险的竞品",
+      "category": "discovery",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834094"
+    },
+    {
+      "text": "单实例 | ✅ 50+实例 |",
+      "category": "mistake",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834150"
+    },
+    {
+      "text": "需VPS | ✅ Android/Termux 原生 |",
+      "category": "mistake",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834153"
+    },
+    {
+      "text": "持续写《40天生存指南》系列",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834203"
+    },
+    {
+      "text": "每次真实经历都记录并发布",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834205"
+    },
+    {
+      "text": "Lobster Orchestrator 找真机测试",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834206"
+    },
+    {
+      "text": "迭代进化，发掘更多原创内容",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834208"
+    },
+    {
+      "text": "市场验证：证明\"多Agent编排\"是真需求",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834209"
+    },
+    {
+      "text": "自动从经验创建技能，使用中自我改进 | ❌ 无 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834210"
+    },
+    {
+      "text": "定期nudge + FTS5搜索 + LLM摘要 | ✅ 文件系统+SOUL.md |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834211"
+    },
+    {
+      "text": "Telegram/Discord/Slack/WhatsApp/Signal | ❌ 仅本地 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834212"
+    },
+    {
+      "text": "$5 VPS / GPU集群 / serverless | 🔄 未编译测试 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834214"
+    },
+    {
+      "text": "200+ (OpenRouter/NousPortal/z.ai等) | 🔄 qwen系列 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834215"
+    },
+    {
+      "text": "隔离subagent并发 | ✅ 50+实例管理 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834216"
+    },
+    {
+      "text": "Honcho辩证用户模型 | ❌ 无 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834217"
+    },
+    {
+      "text": "内置自然语言调度 | ❌ 无 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834218"
+    },
+    {
+      "text": "兼容 agentskills.io | ✅ ClawHub |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834220"
+    },
+    {
+      "text": "内置 | 🔄 开发中 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834221"
+    },
+    {
+      "text": "Android/Termux 原生 |",
+      "category": "achievement",
+      "source": "memory/2026-04-07.md",
+      "extracted_at": "2026-04-07T23:03:41.834222"
+    },
+    {
+      "text": "3 个\"知识点\"全是空洞套话（\"在 08-monetization 领域的实际应用中，该概念被广泛应用于生产环境\"）、虚假数据（\"数据一致性 100%\"）、无实质内容",
+      "category": "problem",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834491"
+    },
+    {
+      "text": "号称 200 个知识点，实际只有 3 个循环定义占位符（\"量子宇宙主题\"\"量子宇宙挑战\"\"量子宇宙愿景\"），内容完全无意义",
+      "category": "problem",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834494"
+    },
+    {
+      "text": "严重模板化（循环定义 + 占位符 × 200 个）",
+      "category": "mistake",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834501"
+    },
+    {
+      "text": "模板化 | ✅ 重写 |",
+      "category": "mistake",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834502"
+    },
+    {
+      "text": "模板化 | ✅ 重写 |",
+      "category": "mistake",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834503"
+    },
+    {
+      "text": "深度重写为 10 个真实知识点，4,421 bytes",
+      "category": "achievement",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834508"
+    },
+    {
+      "text": "完全重写为 3 个真实变现策略知识点（技能市场变现、咨询式变现、内容变现），含真实案例和数据",
+      "category": "achievement",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834510"
+    },
+    {
+      "text": "完全重写为 3 个量子计算核心概念（量子纠错、量子退相干、量子优势路线图），含真实物理原理和最新数据",
+      "category": "achievement",
+      "source": "memory/2026-04-06.md",
+      "extracted_at": "2026-04-07T23:03:41.834511"
+    },
+    {
+      "text": "模板化空洞 | ✅ 重写 |",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835045"
+    },
+    {
+      "text": "严重模板化 | ✅ 重写 |",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835048"
+    },
+    {
+      "text": "循环定义 (\"X 主题\"定义为\"X 主题\")",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835049"
+    },
+    {
+      "text": "万能句 (\"广泛应用于生产环境\")",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835051"
+    },
+    {
+      "text": "编造数据 (无来源的百分比/ROI)",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835052"
+    },
+    {
+      "text": "占位符 (\"扩展：XXX\")",
+      "category": "mistake",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835053"
+    },
+    {
+      "text": "深度分析 | ⏭️ 跳过 |",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835059"
+    },
+    {
+      "text": "原理可解释 (技术细节)",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835061"
+    },
+    {
+      "text": "案例真实 (公司名、产品名、数据)",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835062"
+    },
+    {
+      "text": "数据有源 (链上、官方、报告)",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835063"
+    },
+    {
+      "text": "应用具体 (场景 + 参数)",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835065"
+    },
+    {
+      "text": "完成 (审计 + 重写 + 记录)",
+      "category": "achievement",
+      "source": "memory/2026-04-05.md",
+      "extracted_at": "2026-04-07T23:03:41.835066"
+    }
+  ],
+  "patterns": [
+    {
+      "name": "知识库审计",
+      "frequency": 13,
+      "detected_at": "2026-04-07T23:03:41.845370",
+      "skill_candidate": true
+    },
+    {
+      "name": "HN研究",
+      "frequency": 5,
+      "detected_at": "2026-04-07T23:03:41.845376",
+      "skill_candidate": true
+    },
+    {
+      "name": "虾聊发帖",
+      "frequency": 4,
+      "detected_at": "2026-04-07T23:03:41.845378",
+      "skill_candidate": false
+    },
+    {
+      "name": "记忆更新",
+      "frequency": 3,
+      "detected_at": "2026-04-07T23:03:41.845379",
+      "skill_candidate": false
+    }
+  ],
+  "user_preferences": {
+    "communication_style": "direct",
+    "humor": "sarcastic_ok",
+    "decision_framework": "roi_driven",
+    "proof_requirement": "file_path_required",
+    "cost_sensitivity": "high",
+    "originality_required": true,
+    "cost_conscious": true,
+    "last_updated": "2026-04-07T23:03:41.836861"
+  },
+  "skill_drafts": [],
+  "nudges": [],
+  "last_run": "2026-04-07T23:03:41.845680"
+}
