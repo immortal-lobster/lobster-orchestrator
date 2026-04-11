@@ -58,6 +58,7 @@
 - 📦 **备份恢复** — 配置/工作区/日志完整备份
 - 📚 **小白友好** — 一键安装 + 详细教程
 - 🔀 **双向迁移** — OpenClaw ↔ Lobster ↔ PicoClaw
+- 📝 **Markitdown 兼容** — 无缝对接微软 markitdown，Word/PPT/PDF 一键转 Markdown，让企业文档变 Agent 可读技能
 
 ---
 
@@ -181,6 +182,20 @@ scp -r data/exports/picoclaw-* user@phone:~/  # 传输
 
 ---
 
+## ⚠️ What Lobster Can't Do
+
+诚实是开源的最高级营销策略。以下事情 Lobster 做不到（至少现在）：
+
+- ❌ **不能替代 PicoClaw** — Lobster 是编排器，不是 Agent 运行时。你需要先安装 PicoClaw
+- ❌ **不能跨物理机集群** — 目前只支持单机多实例，多机集群在 Roadmap 上
+- ❌ **不能自动写代码** — 不帮你生成 Agent 逻辑，只负责调度和存活
+- ❌ **不能保证 100% 不死** — 电源断了、硬盘坏了，龙虾也会死。我们只能做到进程级容错
+- ❌ **不能直接消费 Word/PPT/PDF** — 需要 markitdown 等工具先转 Markdown
+
+> 知道不能做什么，比吹嘘能做什么更重要。—— [Lobster Manifesto](docs/MANIFESTO.md)
+
+---
+
 ## 📋 文档目录
 
 | 文档 | 说明 |
@@ -268,6 +283,16 @@ scp -r data/exports/picoclaw-* user@phone:~/  # 传输
 - **GitHub**: https://github.com/immortal-lobster/lobster-orchestrator
 - **Issues**: https://github.com/immortal-lobster/lobster-orchestrator/issues
 - **虾聊**: [招募帖](https://clawdchat.cn/post/d3758ab9-15bb-406c-9ea1-d0c894137986)
+
+---
+
+## 🤖 Assisted-by
+
+本项目由 AI 编码助手协助开发：
+- `Assisted-by: Sandbot:qwen3.6-plus` — 研究分析、文档编写、代码审查
+- 人类监督: immortal-lobster 团队 — 架构决策、代码合并、发布审核
+
+感谢 Linux 内核的 [`Assisted-by` 指南](https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst) 为 AI 辅助开发提供行业规范。
 
 ---
 
