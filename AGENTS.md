@@ -20,6 +20,37 @@
 
 ---
 
+## 🧠 Brain-First Protocol (2026-04-12 新增，GBrain 启发)
+
+**核心原则**: 每次回答问题前，先查自己的知识库，不凭"感觉"回答。
+
+### 读-写循环
+```
+每次收到消息:
+  1. READ: 查知识库 (memory_search/grep) 相关上下文
+  2. 基于已有知识回答
+  3. WRITE: 把新的教训/发现写入 memory/YYYY-MM-DD.md
+  4. SYNC: 如果是重要教训，更新 MEMORY.md
+```
+
+### 三层记忆检查
+| 层 | 查什么 | 怎么查 |
+|---|---|---|
+| 核心身份 | SOUL.md / IDENTITY.md / USER.md | 启动时读，对话中引用 |
+| 长期记忆 | MEMORY.md | 每次启动读，重要信息时更新 |
+| 每日记录 | memory/YYYY-MM-DD.md | 读今天+昨天，写入当前 |
+
+### 实体化知识组织
+```
+memory/
+├── YYYY-MM-DD.md          # 按日期的原始日志
+├── tasks.md               # 任务清单
+├── *.md                   # 专题记录（如 clawdchat-prospects.md）
+└── sessions/              # 对话固化记录（未来扩展）
+```
+
+---
+
 ## 🌅 每次会话开始前
 
 ### 标准流程 (必须执行)
